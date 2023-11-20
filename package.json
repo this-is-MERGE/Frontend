@@ -1,6 +1,5 @@
 {
-  "name": "horizon-ui-tailwind-react-ts",
-  "version": "1.0.0",
+  "name": "health-mate",
   "private": true,
   "dependencies": {
     "@chakra-ui/hooks": "^2.1.4",
