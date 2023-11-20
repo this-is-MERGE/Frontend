@@ -1,0 +1,27 @@
+# Ignore build output
+dist/
+build/
+
+# Ignore TypeScript source maps
+*.js.map
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+
+# Ignore dependencies
+node_modules/
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+
+# Ignore logs
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
