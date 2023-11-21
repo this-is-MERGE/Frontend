@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// import RtlLayout from "\bpages/rtl";
-import StartPage from "\bpages/start";
-// import AuthLayout from "\bpages/auth";
+// import RtlLayout from "pages/rtl";
+import StartPage from "pages/start";
+// import AuthLayout from "pages/auth";
 const App = () => {
   return (
     <Routes>
