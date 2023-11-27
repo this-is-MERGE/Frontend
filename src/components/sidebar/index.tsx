@@ -2,8 +2,9 @@
 
 import { HiX } from "react-icons/hi";
 import Links from "./components/Links";
+import Link from "./components/Link";
 
-import SidebarCard from "components/sidebar/componentsrtl/SidebarCard";
+import TextLogo from "assets/custom/TextLogo.svg";
 import routes from "routes";
 
 const Sidebar = (props: {
@@ -18,30 +19,54 @@ const Sidebar = (props: {
       }`}
     >
       <span
-        className="absolute top-4 right-4 block cursor-pointer xl:hidden"
+        className="absolute right-4 top-4 block cursor-pointer xl:hidden"
         onClick={onClose}
       >
         <HiX />
       </span>
 
-      <div className={`mx-[56px] mt-[50px] flex items-center`}>
-        <div className="mt-1 ml-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
-          Horizon <span className="font-medium">FREE</span>
+      <div
+        className={`mb-[33px] ml-[33px] mr-[44px] mt-[55px] flex items-center`}
+      >
+        <div className="ml-1 mt-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
+          <img
+            className="w-[290px] items-center justify-center"
+            src={TextLogo}
+            alt="Health_Mate_TextLogo"
+          />
         </div>
       </div>
-      <div className="mt-[58px] mb-7 h-px bg-gray-300 dark:bg-white/30" />
+      <div className="mb-7 mt-[58px] h-px bg-gray-300 dark:bg-white/30" />
       {/* Nav item */}
 
       <ul className="mb-auto pt-1">
-        <Links routes={routes} />
+        <h1 className="mb-[18px] mt-[1rem] px-8 text-2xl font-bold text-navy-700 dark:text-white">
+          환자 정보 관리
+        </h1>
+        <div className="ml-[18px]">
+          <Link route={routes[0]} />
+          <Link route={routes[1]} />
+        </div>
+        <h1 className="mb-[18px] mt-[3rem] px-8 text-2xl font-bold text-navy-700 marker:mb-[18px] dark:text-white">
+          진료, 검사, 치료
+        </h1>
+        <div className="ml-[18px]">
+          <Link route={routes[2]} />
+          <Link route={routes[3]} />
+          <Link route={routes[4]} />
+          <Link route={routes[5]} />
+        </div>
+        <h1 className="mb-[18px] mt-[3rem] px-8 text-2xl font-bold text-navy-700 marker:mb-[18px] dark:text-white">
+          기타
+        </h1>
+        <div className="ml-[18px]">
+          <Link route={routes[6]} />
+          <Link route={routes[7]} />
+        </div>
       </ul>
 
       {/* Free Horizon Card */}
-      <div className="flex justify-center">
-        <SidebarCard />
-      </div>
-
-      {/* Nav item end */}
+      <div className="flex justify-center"></div>
     </div>
   );
 };
