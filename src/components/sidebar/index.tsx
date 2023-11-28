@@ -26,11 +26,11 @@ const Sidebar = (props: {
       </span>
 
       <div
-        className={`mb-[33px] ml-[33px] mr-[44px] mt-[55px] flex items-center`}
+        className={`mb-[20px] ml-[30px] mr-[37px] mt-[55px] flex items-center`}
       >
         <div className="ml-1 mt-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
           <img
-            className="w-[290px] items-center justify-center"
+            className="w-[230px] items-center justify-center"
             src={TextLogo}
             alt="Health_Mate_TextLogo"
           />
@@ -40,14 +40,14 @@ const Sidebar = (props: {
       {/* Nav item */}
 
       <ul className="mb-auto pt-1">
-        <h1 className="mb-[18px] mt-[1rem] px-8 text-2xl font-bold text-navy-700 dark:text-white">
+        <h1 className="mb-[14px] px-8 text-xl font-bold text-navy-700 dark:text-white">
           환자 정보 관리
         </h1>
         <div className="ml-[18px]">
           <Link route={routes[0]} />
           <Link route={routes[1]} />
         </div>
-        <h1 className="mb-[18px] mt-[3rem] px-8 text-2xl font-bold text-navy-700 marker:mb-[18px] dark:text-white">
+        <h1 className="mb-[18px] mt-[3rem] px-8 text-xl font-bold text-navy-700 marker:mb-[18px] dark:text-white">
           진료, 검사, 치료
         </h1>
         <div className="ml-[18px]">
@@ -56,7 +56,7 @@ const Sidebar = (props: {
           <Link route={routes[4]} />
           <Link route={routes[5]} />
         </div>
-        <h1 className="mb-[18px] mt-[3rem] px-8 text-2xl font-bold text-navy-700 marker:mb-[18px] dark:text-white">
+        <h1 className="mb-[18px] mt-[3rem] px-8 text-xl font-bold text-navy-700 marker:mb-[18px] dark:text-white">
           기타
         </h1>
         <div className="ml-[18px]">
