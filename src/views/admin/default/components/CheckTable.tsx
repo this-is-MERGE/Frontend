@@ -1,8 +1,9 @@
 import React from "react";
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
-import Checkbox from "components/checkbox";
 import Card from "components/card";
 import { FiSearch } from "react-icons/fi";
+import Checkbox from "components/checkbox";
+import { useState } from "react";
 
 import {
   createColumnHelper,
@@ -14,9 +15,9 @@ import {
 } from "@tanstack/react-table";
 
 type RowObj = {
-  name: [string, boolean];
+  name: number;
   progress: string;
-  quantity: number;
+  quantity: string;
   date: string;
 };
 
@@ -24,6 +25,15 @@ function CheckTable(props: { tableData: any }) {
   const { tableData } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   let defaultData = tableData;
+
+  const selectOnlyOne = (id: string) => {
+    for (var i = 1; i <= 10; i++) {
+      (document.getElementById("check_" + i) as HTMLInputElement).checked =
+        false;
+    }
+    (document.getElementById(id) as HTMLInputElement).checked = true;
+  };
+
   const columns = [
     columnHelper.accessor("name", {
       id: "name",
@@ -32,13 +42,14 @@ function CheckTable(props: { tableData: any }) {
       ),
       cell: (info: any) => (
         <div className="flex items-center">
-          <Checkbox
-            defaultChecked={info.getValue()[1]}
-            colorScheme="brandScheme"
-            me="10px"
+          <input
+            type="checkbox"
+            className="accent-brand-500 dark:accent-brand-400 "
+            id={"check_" + info.getValue()}
+            onChange={(e) => selectOnlyOne(e.target.id)}
           />
           <p className="ml-3 text-sm font-bold text-navy-700 dark:text-white">
-            {info.getValue()[0]}
+            {info.getValue()}
           </p>
         </div>
       ),
@@ -162,7 +173,7 @@ function CheckTable(props: { tableData: any }) {
             전체 환자 목록
           </div>
           <p className="text-sm font-bold text-gray-600 dark:text-white">
-            {">"} page 1
+            page 1
           </p>
         </div>
         {/* search bar */}
@@ -228,7 +239,7 @@ function CheckTable(props: { tableData: any }) {
                       return (
                         <td
                           key={cell.id}
-                          className="min-w-[150px] border-white/0 py-3  pr-4"
+                          className="min-w-[58px] border-white/0 py-3  pr-4"
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
@@ -249,3 +260,6 @@ function CheckTable(props: { tableData: any }) {
 
 export default CheckTable;
 const columnHelper = createColumnHelper<RowObj>();
+
+// <Radio id="html" name="type" label="HTML" />
+//       <Radio id="react" name="type" label="React" defaultChecked />
