@@ -1,41 +1,71 @@
 type RowObj = {
-	name: [string, boolean];
-	progress: string;
-	quantity: number;
-	date: string; 
+  name: number;
+  progress: string;
+  quantity: string;
+  date: string;
 };
 
 const tableDataCheck: RowObj[] = [
-	{
-		name: [ 'Horizon UI PRO', true ],
-		quantity: 2458,
-		progress: '17.5%',
-		date: '12 Jan 2021',
-	},
-	{
-		name: [ 'Horizon UI Free', true ],
-		quantity: 1485,
-		progress: '10.8%',
-		date: '21 Feb 2021',
-	},
-	{
-		name: [ 'Weekly Update', true ],
-		quantity: 1024,
-		progress: '21.3%',
-		date: '13 Mar 2021',
-	},
-	{
-		name: [ 'Venus 3D Asset', true ],
-		quantity: 858,
-		progress: '31.5%',
-		date: '24 Jan 2021',
-	},
-	{
-		name: [ 'Marketplace', true ],
-		quantity: 258,
-		progress: '12.2%',
-		date: '24 Oct 2022',
-	}
+  {
+    name: 1,
+    quantity: "010903-1747834",
+    progress: "소전일",
+    date: "여자",
+  },
+  {
+    name: 2,
+    quantity: "010903-1747834",
+    progress: "이전일",
+    date: "여자",
+  },
+  {
+    name: 3,
+    quantity: "010903-1747834",
+    progress: "바전일",
+    date: "여자",
+  },
+  {
+    name: 4,
+    quantity: "010903-1747834",
+    progress: "김전일",
+    date: "남자",
+  },
+  {
+    name: 5,
+    quantity: "010903-1747834",
+    progress: "장전일",
+    date: "여자",
+  },
+  {
+    name: 6,
+    quantity: "010903-1747834",
+    progress: "김전일",
+    date: "남자",
+  },
+  {
+    name: 7,
+    quantity: "010903-1747834",
+    progress: "나전일",
+    date: "남자",
+  },
+  {
+    name: 8,
+    quantity: "010903-1747834",
+    progress: "다전일",
+    date: "남자",
+  },
+  {
+    name: 9,
+    quantity: "010903-1747834",
+    progress: "라전일",
+    date: "남자",
+  },
+  {
+    name: 10,
+    quantity: "010903-1747834",
+    progress: "마전일",
+    date: "남자",
+  },
 ];
 
 export default tableDataCheck;

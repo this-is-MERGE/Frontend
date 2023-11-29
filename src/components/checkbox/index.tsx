@@ -1,4 +1,5 @@
 const Checkbox = (props: {
+  checked?: boolean;
   extra?: string;
   color?:
     | "red"
