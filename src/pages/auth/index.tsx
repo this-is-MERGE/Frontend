@@ -1,10 +1,52 @@
-import Footer from "components/footer/FooterAuthDefault";
-import authImg from "assets/img/auth/auth.png";
-import { Link, Routes, Route, Navigate } from "react-router-dom";
+import React from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import Navbar from "components/navbar";
+import Sidebar from "components/sidebar";
+import Footer from "components/footer/Footer";
 import routes from "routes";
-import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 
-export default function Auth() {
+export default function Auth(props: { [x: string]: any }) {
+  const { ...rest } = props;
+  const location = useLocation();
+  const [open, setOpen] = React.useState(true);
+  const [currentRoute, setCurrentRoute] = React.useState("Main Dashboard");
+
+  React.useEffect(() => {
+    window.addEventListener("resize", () =>
+      window.innerWidth < 1200 ? setOpen(false) : setOpen(true)
+    );
+  }, []);
+
+  React.useEffect(() => {
+    getActiveRoute(routes);
+  }, [location.pathname]);
+
+  const getActiveRoute = (routes: RoutesType[]): string | boolean => {
+    let activeRoute = "Main Dashboard";
+    for (let i = 0; i < routes.length; i++) {
+      if (
+        window.location.href.indexOf(
+          routes[i].layout + "/" + routes[i].path
+        ) !== -1
+      ) {
+        setCurrentRoute(routes[i].name);
+      }
+    }
+    return activeRoute;
+  };
+
+  const getActiveNavbar = (routes: RoutesType[]): string | boolean => {
+    let activeNavbar = false;
+    for (let i = 0; i < routes.length; i++) {
+      if (
+        window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+      ) {
+        return routes[i].secondary;
+      }
+    }
+    return activeNavbar;
+  };
+
   const getRoutes = (routes: RoutesType[]): any => {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
@@ -16,48 +58,35 @@ export default function Auth() {
       }
     });
   };
+
   document.documentElement.dir = "ltr";
   return (
-    <div>
-      <div className="relative float-right h-full min-h-screen w-full !bg-white dark:!bg-navy-900">
-        <FixedPlugin />
-        <main className={`mx-auto min-h-screen`}>
-          <div className="relative flex">
-            <div className="mx-auto flex min-h-full w-full flex-col justify-start pt-12 md:max-w-[75%] lg:h-screen lg:max-w-[1013px] lg:px-8 lg:pt-0 xl:h-[100vh] xl:max-w-[1383px] xl:px-0 xl:pl-[70px]">
-              <div className="mb-auto flex flex-col pl-5 pr-5 md:pl-12 md:pr-0 lg:max-w-[48%] lg:pl-0 xl:max-w-full">
-                <Link to="/admin" className="mt-0 w-max lg:pt-10">
-                  <div className="mx-auto flex h-fit w-fit items-center hover:cursor-pointer">
-                    <svg
-                      width="8"
-                      height="12"
-                      viewBox="0 0 8 12"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6.70994 2.11997L2.82994 5.99997L6.70994 9.87997C7.09994 10.27 7.09994 10.9 6.70994 11.29C6.31994 11.68 5.68994 11.68 5.29994 11.29L0.709941 6.69997C0.319941 6.30997 0.319941 5.67997 0.709941 5.28997L5.29994 0.699971C5.68994 0.309971 6.31994 0.309971 6.70994 0.699971C7.08994 1.08997 7.09994 1.72997 6.70994 2.11997V2.11997Z"
-                        fill="#A3AED0"
-                      />
-                    </svg>
-                    <p className="ml-3 text-sm text-gray-600">
-                      Back to Dashboard
-                    </p>
-                  </div>
-                </Link>
-                <Routes>
-                  {getRoutes(routes)}
-                  <Route
-                    path="/"
-                    element={<Navigate to="/auth/sign-in" replace />}
-                  />
-                </Routes>
-                <div className="absolute right-0 hidden h-full min-h-screen md:block lg:w-[49vw] 2xl:w-[44vw]">
-                  <div
-                    className="absolute flex h-full w-full items-end justify-center bg-cover bg-center"
-                    style={{ backgroundImage: `url(${authImg})` }}
-                  />
-                </div>
-              </div>
+    <div className="flex h-full w-full">
+      <Sidebar open={open} onClose={() => setOpen(false)} />
+      {/* Navbar & Main Content */}
+      <div className=" w-full bg-lightPrimary dark:!bg-navy-900">
+        {/* Main Content */}
+        <main
+          className={`mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[320px]`}
+        >
+          {/* Routes */}
+          <div className="h-full">
+            <Navbar
+              onOpenSidenav={() => setOpen(true)}
+              brandText={currentRoute}
+              secondary={getActiveNavbar(routes)}
+              {...rest}
+            />
+            <div className="pt-5s mx-auto mb-auto min-h-[84vh] p-2 md:pr-2">
+              <Routes>
+                {getRoutes(routes)}
+                <Route
+                  path="/"
+                  element={<Navigate to="/auth/default" replace />}
+                />
+              </Routes>
+            </div>
+            <div className="p-3">
               <Footer />
             </div>
           </div>
