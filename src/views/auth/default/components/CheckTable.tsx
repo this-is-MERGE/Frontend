@@ -1,9 +1,9 @@
-import React from "react";
 import { MdChevronRight, MdChevronLeft } from "react-icons/md";
+import { useEffect, useState } from "react";
 import Card from "components/card";
 import { FiSearch } from "react-icons/fi";
-import Checkbox from "components/checkbox";
-import { useState } from "react";
+import { PatientType } from "types/patient";
+import { getPatientAPI } from "apis/patient";
 
 import {
   createColumnHelper,
@@ -14,17 +14,23 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-type RowObj = {
-  name: number;
-  progress: string;
-  quantity: string;
-  date: string;
-};
+function CheckTable() {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  let [data, setData] = useState<PatientType[]>([]);
 
-function CheckTable(props: { tableData: any }) {
-  const { tableData } = props;
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  let defaultData = tableData;
+  const getPatients = async (): Promise<void> => {
+    data = await getPatientAPI();
+    setData(data);
+  };
+
+  // const reloadPatients = async (): Promise<void> => {
+  //   await getPatients();
+  // };
+
+  useEffect(() => {
+    void getPatients();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectOnlyOne = (id: string) => {
     for (var i = 1; i <= 10; i++) {
@@ -35,8 +41,8 @@ function CheckTable(props: { tableData: any }) {
   };
 
   const columns = [
-    columnHelper.accessor("name", {
-      id: "name",
+    columnHelper.accessor("PATIENT_ID", {
+      id: "PATIENT_ID",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">항목</p>
       ),
@@ -54,8 +60,8 @@ function CheckTable(props: { tableData: any }) {
         </div>
       ),
     }),
-    columnHelper.accessor("progress", {
-      id: "progress",
+    columnHelper.accessor("NAME", {
+      id: "NAME",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">이름</p>
       ),
@@ -65,8 +71,8 @@ function CheckTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("quantity", {
-      id: "quantity",
+    columnHelper.accessor("RESIDENT_REGISTRATION_NUMBER", {
+      id: "RESIDENT_REGISTRATION_NUMBER",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
           주민등록번호
@@ -78,8 +84,8 @@ function CheckTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("date", {
-      id: "date",
+    columnHelper.accessor("GENDER", {
+      id: "GENDER",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">성별</p>
       ),
@@ -89,8 +95,8 @@ function CheckTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("quantity", {
-      id: "quantity",
+    columnHelper.accessor("ADDRESS", {
+      id: "ADDRESS",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">주소</p>
       ),
@@ -100,8 +106,8 @@ function CheckTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("quantity", {
-      id: "quantity",
+    columnHelper.accessor("USER_NAME", {
+      id: "USER_NAME",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
           담당의
@@ -113,8 +119,8 @@ function CheckTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("quantity", {
-      id: "quantity",
+    columnHelper.accessor("LAST_TREATMENT_DATE", {
+      id: "LAST_TREATMENT_DATE",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
           마지막 진료일
@@ -126,8 +132,8 @@ function CheckTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("quantity", {
-      id: "quantity",
+    columnHelper.accessor("RESERVATION_DATE", {
+      id: "RESERVATION_DATE",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
           예약일시
@@ -139,8 +145,8 @@ function CheckTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("quantity", {
-      id: "quantity",
+    columnHelper.accessor("SPECIAL_NOTE", {
+      id: "SPECIAL_NOTE",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
           특이사항
@@ -153,7 +159,7 @@ function CheckTable(props: { tableData: any }) {
       ),
     }),
   ]; // eslint-disable-next-line
-  const [data, setData] = React.useState(() => [...defaultData]);
+
   const table = useReactTable({
     data,
     columns,
@@ -165,6 +171,7 @@ function CheckTable(props: { tableData: any }) {
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
+  console.log(data);
   return (
     <Card extra={"w-full h-full sm:overflow-auto px-6 pb-6"}>
       <header className="relative flex h-[53px] items-center justify-between pt-[1.9rem]">
@@ -259,7 +266,4 @@ function CheckTable(props: { tableData: any }) {
 }
 
 export default CheckTable;
-const columnHelper = createColumnHelper<RowObj>();
-
-// <Radio id="html" name="type" label="HTML" />
-//       <Radio id="react" name="type" label="React" defaultChecked />
+const columnHelper = createColumnHelper<PatientType>();

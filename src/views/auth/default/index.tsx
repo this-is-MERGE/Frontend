@@ -1,5 +1,5 @@
 import tableDataDevelopment from "./variables/tableDataDevelopment";
-import tableDataCheck from "./variables/tableDataCheck";
+// import tableDataCheck from "./variables/tableDataCheck";
 import CheckTable from "./components/CheckTable";
 import tableDataColumns from "./variables/tableDataColumns";
 import tableDataComplex from "./variables/tableDataComplex";
@@ -11,7 +11,7 @@ const Tables = () => {
   return (
     <div>
       <div className="mt-5 grid h-full min-h-[60vh] grid-cols-1 grid-rows-1">
-        <CheckTable tableData={tableDataCheck} />
+        <CheckTable />
       </div>
     </div>
   );
