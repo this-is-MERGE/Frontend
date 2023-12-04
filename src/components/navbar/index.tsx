@@ -19,6 +19,11 @@ const Navbar = (props: {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
 
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let date = today.getDate() > 9 ? today.getDate() : `0${today.getDate()}`;
+
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
@@ -141,7 +146,8 @@ const Navbar = (props: {
                     환자 "홍길동"님의 담당자로 지정되셨습니다.
                   </p>
                   <p className="font-base text-left text-xs text-gray-900 dark:text-white">
-                    2023년 12월 28일, 오후 1시 30분으로 예약되었습니다.
+                    {year}년 {month}월 {date}일, 오후 1시 30분으로
+                    예약되었습니다.
                   </p>
                 </div>
               </button>
@@ -177,8 +183,8 @@ const Navbar = (props: {
                     금일 전체 미팅이 있을 예정입니다.
                   </p>
                   <p className="font-base text-left text-xs text-gray-900 dark:text-white">
-                    2023년 12월 30일, 오후 12시 30분에 회의실로 모여주시길
-                    바랍니다.
+                    {year}년 {month}월 {date}일, 오후 12시 30분에 회의실로
+                    모여주시길 바랍니다.
                   </p>
                 </div>
               </button>

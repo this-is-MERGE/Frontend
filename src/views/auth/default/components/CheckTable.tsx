@@ -4,6 +4,7 @@ import Card from "components/card";
 import { FiSearch } from "react-icons/fi";
 import { PatientType } from "types/patient";
 import { getPatientAPI } from "apis/patient";
+import ManagePatient from "./ManagePatient";
 
 import {
   createColumnHelper,
@@ -23,17 +24,16 @@ function CheckTable() {
     setData(data);
   };
 
-  // const reloadPatients = async (): Promise<void> => {
-  //   await getPatients();
-  // };
-
   useEffect(() => {
     void getPatients();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const selectOnlyOne = (id: string) => {
-    for (var i = 1; i <= 10; i++) {
+    for (
+      let i = data[0].PATIENT_ID;
+      i <= data[data.length - 1].PATIENT_ID + 1;
+      i++
+    ) {
       (document.getElementById("check_" + i) as HTMLInputElement).checked =
         false;
     }
@@ -52,7 +52,7 @@ function CheckTable() {
         <div className="flex items-center">
           <input
             type="checkbox"
-            className="accent-brand-500 dark:accent-brand-400 "
+            className="ischecked accent-brand-500 dark:accent-brand-400 "
             id={"check_" + info.getValue()}
             onChange={(e) => selectOnlyOne(e.target.id)}
           />
@@ -173,97 +173,103 @@ function CheckTable() {
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
-  console.log(data);
-  return (
-    <Card extra={"w-full h-full sm:overflow-auto px-6 pb-6"}>
-      <header className="relative flex h-[53px] items-center justify-between pt-[1.9rem]">
-        <div className="title-container">
-          <div className="text-xl font-bold text-navy-700 dark:text-white">
-            전체 환자 목록
-          </div>
-          <p className="text-sm font-bold text-gray-600 dark:text-white">
-            page 1
-          </p>
-        </div>
-        {/* search bar */}
-        <div className="tool-container flex items-center gap-6">
-          <div className="flex h-[42px] items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
-            <p className="pl-3 pr-2 text-xl">
-              <FiSearch className="h-4 w-4 text-gray-400 dark:text-white" />
-            </p>
-            <input
-              type="text"
-              placeholder="Search..."
-              className="block h-full w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
-            />
-          </div>
-          <div className="buttom-container flex justify-end gap-2">
-            <button className="flex flex-row items-center rounded-xl bg-brand-400 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
-              <MdChevronLeft className="text-lg" />
-            </button>
-            <button className="flex flex-row items-center rounded-xl bg-brand-400 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
-              <MdChevronRight className="text-lg" />
-            </button>
-          </div>
-        </div>
-      </header>
 
-      <div className="mb-4 mt-8 overflow-x-scroll">
-        <table className="w-full overflow-x-auto">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="!border-px !border-gray-400">
-                {headerGroup.headers.map((header) => {
+  return (
+    <>
+      <Card extra={"w-full h-full sm:overflow-auto px-6 pb-6"}>
+        <header className="relative flex h-[53px] items-center justify-between pt-[1.9rem]">
+          <div className="title-container">
+            <div className="text-xl font-bold text-navy-700 dark:text-white">
+              전체 환자 목록
+            </div>
+            <p className="text-sm font-bold text-gray-600 dark:text-white">
+              page 1
+            </p>
+          </div>
+          {/* search bar */}
+          <div className="tool-container flex items-center gap-6">
+            <div className="flex h-[42px] items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
+              <p className="pl-3 pr-2 text-xl">
+                <FiSearch className="h-4 w-4 text-gray-400 dark:text-white" />
+              </p>
+              <input
+                type="text"
+                placeholder="Search..."
+                className="block h-full w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
+              />
+            </div>
+            <div className="buttom-container flex justify-end gap-2">
+              <button className="flex flex-row items-center rounded-xl bg-brand-500 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
+                <MdChevronLeft className="text-lg" />
+              </button>
+              <button className="flex flex-row items-center rounded-xl bg-brand-500 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
+                <MdChevronRight className="text-lg" />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div className="mb-4 mt-8 overflow-x-scroll">
+          <table className="w-full overflow-x-auto">
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr
+                  key={headerGroup.id}
+                  className="!border-px !border-gray-400"
+                >
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <th
+                        key={header.id}
+                        colSpan={header.colSpan}
+                        onClick={header.column.getToggleSortingHandler()}
+                        className="cursor-pointer border-b-[1px] border-gray-200 pb-2 pr-4 pt-4 text-start"
+                      >
+                        <div className="items-center justify-between text-xs text-gray-200">
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: "",
+                            desc: "",
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      </th>
+                    );
+                  })}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {table
+                .getRowModel()
+                .rows.slice(0, 10) // n개 만큼 자름
+                .map((row) => {
                   return (
-                    <th
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      onClick={header.column.getToggleSortingHandler()}
-                      className="cursor-pointer border-b-[1px] border-gray-200 pb-2 pr-4 pt-4 text-start"
-                    >
-                      <div className="items-center justify-between text-xs text-gray-200">
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{
-                          asc: "",
-                          desc: "",
-                        }[header.column.getIsSorted() as string] ?? null}
-                      </div>
-                    </th>
+                    <tr key={row.id}>
+                      {row.getVisibleCells().map((cell) => {
+                        return (
+                          <td
+                            key={cell.id}
+                            className="min-w-[58px] border-white/0 py-3  pr-4"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
                   );
                 })}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table
-              .getRowModel()
-              .rows.slice(0, 10) // n개 만큼 자름
-              .map((row) => {
-                return (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => {
-                      return (
-                        <td
-                          key={cell.id}
-                          className="min-w-[58px] border-white/0 py-3  pr-4"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      </div>
-    </Card>
+            </tbody>
+          </table>
+        </div>
+      </Card>
+      <ManagePatient getPatients={getPatients} />
+    </>
   );
 }
 

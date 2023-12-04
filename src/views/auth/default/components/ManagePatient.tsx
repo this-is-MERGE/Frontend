@@ -1,0 +1,65 @@
+import { FaUserEdit, FaUserPlus, FaUserSlash } from "react-icons/fa";
+// import { useEffect, useState } from "react";
+// import Card from "components/card";
+// import { PatientType } from "types/patient";
+import { getPatientAPI, deletePatientAPI } from "apis/patient";
+import { PatientType } from "types/patient";
+import { useState, useEffect } from "react";
+
+interface PatientsProps {
+  getPatients: () => Promise<void>;
+}
+
+function ManagePatient({ getPatients }: PatientsProps): JSX.Element {
+  let checked = 0;
+
+  const checkSelected = () => {
+    let list = document.getElementsByClassName("ischecked");
+    for (let i = 1; i <= list.length; i++) {
+      if ((document.getElementById("check_" + i) as HTMLInputElement).checked) {
+        checked = i;
+      }
+    }
+  };
+
+  const onDeleteClick = async (): Promise<void> => {
+    if (window.confirm("해당 환자를 삭제하시겠습니까?")) {
+      checkSelected();
+      const flag = await deletePatientAPI(checked);
+      if (flag) {
+      }
+    }
+  };
+
+  return (
+    <div className="mt-[30px] flex justify-end gap-4">
+      <button
+        className="flex flex-row items-center gap-2 rounded-xl bg-brand-500 px-4 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200"
+        data-ripple-light
+      >
+        <FaUserEdit className="h-4.5 w-4.5" />
+        환자 정보 수정
+      </button>
+      <button
+        className="flex flex-row items-center gap-2 rounded-xl bg-brand-500 px-4 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200"
+        data-ripple-light
+      >
+        <FaUserPlus className="h-4.5 w-4.5" />
+        신규 환자 추가
+      </button>
+      <button
+        className="flex flex-row items-center gap-2 rounded-xl bg-red-500 px-4 py-3 text-base font-medium text-white transition duration-200 hover:bg-red-600 active:bg-red-700 dark:bg-red-400 dark:text-white dark:hover:bg-red-300 dark:active:bg-red-200"
+        data-ripple-light
+        onClick={() => {
+          onDeleteClick();
+          getPatients();
+        }}
+      >
+        <FaUserSlash className="h-4.5 w-4.5" />
+        선택 환자 삭제
+      </button>
+    </div>
+  );
+}
+
+export default ManagePatient;

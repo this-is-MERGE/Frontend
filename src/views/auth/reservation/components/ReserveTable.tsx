@@ -33,7 +33,11 @@ function ReserveTable() {
   }, []);
 
   const selectOnlyOne = (id: string) => {
-    for (var i = 1; i <= 10; i++) {
+    for (
+      let i = data[0].PATIENT_ID;
+      i <= data[data.length - 1].PATIENT_ID + 1;
+      i++
+    ) {
       (document.getElementById("check_" + i) as HTMLInputElement).checked =
         false;
     }
@@ -52,7 +56,7 @@ function ReserveTable() {
         <div className="flex items-center">
           <input
             type="checkbox"
-            className="accent-brand-500 dark:accent-brand-400 "
+            className="ischecked accent-brand-500 dark:accent-brand-400"
             id={"check_" + info.getValue()}
             onChange={(e) => selectOnlyOne(e.target.id)}
           />
@@ -173,7 +177,7 @@ function ReserveTable() {
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
-  console.log(data);
+
   return (
     <Card extra={"w-full h-full sm:overflow-auto px-6 pb-6"}>
       <header className="relative flex h-[53px] items-center justify-between pt-[1.9rem]">
@@ -198,10 +202,10 @@ function ReserveTable() {
             />
           </div>
           <div className="buttom-container flex justify-end gap-2">
-            <button className="flex flex-row items-center rounded-xl bg-brand-400 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
+            <button className="flex flex-row items-center rounded-xl bg-brand-500 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
               <MdChevronLeft className="text-lg" />
             </button>
-            <button className="flex flex-row items-center rounded-xl bg-brand-400 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
+            <button className="flex flex-row items-center rounded-xl bg-brand-500 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
               <MdChevronRight className="text-lg" />
             </button>
           </div>
