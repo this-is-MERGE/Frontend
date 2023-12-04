@@ -1,16 +1,11 @@
 import { FaUserEdit, FaUserPlus, FaUserSlash } from "react-icons/fa";
-// import { useEffect, useState } from "react";
-// import Card from "components/card";
-// import { PatientType } from "types/patient";
-import { getPatientAPI, deletePatientAPI } from "apis/patient";
-import { PatientType } from "types/patient";
-import { useState, useEffect } from "react";
+import { deletePatientAPI } from "apis/patient";
 
 interface PatientsProps {
-  getPatients: () => Promise<void>;
+  reloadPatients: () => Promise<void>;
 }
 
-function ManagePatient({ getPatients }: PatientsProps): JSX.Element {
+function ManagePatient({ reloadPatients }: PatientsProps): JSX.Element {
   let checked = 0;
 
   const checkSelected = () => {
@@ -52,7 +47,7 @@ function ManagePatient({ getPatients }: PatientsProps): JSX.Element {
         data-ripple-light
         onClick={() => {
           onDeleteClick();
-          getPatients();
+          reloadPatients();
         }}
       >
         <FaUserSlash className="h-4.5 w-4.5" />

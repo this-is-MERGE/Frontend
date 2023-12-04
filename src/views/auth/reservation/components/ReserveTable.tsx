@@ -20,6 +20,7 @@ function ReserveTable() {
 
   const getTodayPatients = async (): Promise<void> => {
     data = await getTodayPatientAPI();
+    console.log(data);
     setData(data);
   };
 
@@ -33,13 +34,12 @@ function ReserveTable() {
   }, []);
 
   const selectOnlyOne = (id: string) => {
-    for (
-      let i = data[0].PATIENT_ID;
-      i <= data[data.length - 1].PATIENT_ID + 1;
-      i++
-    ) {
-      (document.getElementById("check_" + i) as HTMLInputElement).checked =
-        false;
+    for (let i = 0; i < data.length; i++) {
+      (
+        document.getElementById(
+          "check_" + data[i].PATIENT_ID
+        ) as HTMLInputElement
+      ).checked = false;
     }
     (document.getElementById(id) as HTMLInputElement).checked = true;
   };
