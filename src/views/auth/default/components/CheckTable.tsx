@@ -44,7 +44,9 @@ function CheckTable() {
     columnHelper.accessor("PATIENT_ID", {
       id: "PATIENT_ID",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">항목</p>
+        <p className="text-sm font-bold text-gray-600 dark:text-white">
+          환자 번호
+        </p>
       ),
       cell: (info: any) => (
         <div className="flex items-center">

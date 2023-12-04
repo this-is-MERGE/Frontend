@@ -17,6 +17,38 @@ export const getPatientAPI = async (): Promise<PatientType[]> => {
   return response.patients;
 };
 
+const todayPatient = async (): Promise<PatientType[]> => {
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let date = today.getDate() > 9 ? today.getDate() : `0${today.getDate()}`;
+  let response = (await api.get(PATIENT_PATH)).data.patients;
+  let arr = [];
+
+  for (let i = 0; i < response.length; i++) {
+    console.log(
+      response[i].RESERVATION_DATE.substring(
+        0,
+        response[i].RESERVATION_DATE.indexOf(" ")
+      )
+    );
+    console.log(`${year}-${month}-${date}`);
+    if (
+      response[i].RESERVATION_DATE.substring(
+        0,
+        response[i].RESERVATION_DATE.indexOf(" ")
+      ) === `${year}-${month}-${date}`
+    ) {
+      arr.push(response[i]);
+    }
+  }
+  return arr;
+};
+
+export const getTodayPatientAPI = async (): Promise<PatientType[]> => {
+  return todayPatient();
+};
+
 export const updatePatientAPI = async (
   PATIENT_ID: number,
   GENDER: string,

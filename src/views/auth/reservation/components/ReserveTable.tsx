@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Card from "components/card";
 import { FiSearch } from "react-icons/fi";
 import { PatientType } from "types/patient";
-import { getPatientAPI } from "apis/patient";
+import { getTodayPatientAPI } from "apis/patient";
 
 import {
   createColumnHelper,
@@ -14,21 +14,21 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-function CheckTable() {
+function ReserveTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
   let [data, setData] = useState<PatientType[]>([]);
 
-  const getPatients = async (): Promise<void> => {
-    data = await getPatientAPI();
+  const getTodayPatients = async (): Promise<void> => {
+    data = await getTodayPatientAPI();
     setData(data);
   };
 
   // const reloadPatients = async (): Promise<void> => {
-  //   await getPatients();
+  //   await getTodayPatients();
   // };
 
   useEffect(() => {
-    void getPatients();
+    void getTodayPatients();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -44,7 +44,9 @@ function CheckTable() {
     columnHelper.accessor("PATIENT_ID", {
       id: "PATIENT_ID",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">항목</p>
+        <p className="text-sm font-bold text-gray-600 dark:text-white">
+          환자 번호
+        </p>
       ),
       cell: (info: any) => (
         <div className="flex items-center">
@@ -265,5 +267,5 @@ function CheckTable() {
   );
 }
 
-export default CheckTable;
+export default ReserveTable;
 const columnHelper = createColumnHelper<PatientType>();
