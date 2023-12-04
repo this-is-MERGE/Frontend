@@ -26,13 +26,6 @@ const todayPatient = async (): Promise<PatientType[]> => {
   let arr = [];
 
   for (let i = 0; i < response.length; i++) {
-    console.log(
-      response[i].RESERVATION_DATE.substring(
-        0,
-        response[i].RESERVATION_DATE.indexOf(" ")
-      )
-    );
-    console.log(`${year}-${month}-${date}`);
     if (
       response[i].RESERVATION_DATE.substring(
         0,
@@ -75,7 +68,12 @@ export const updatePatientAPI = async (
   return response.data;
 };
 
-export const deletePatient = async (PATIENT_ID: number): Promise<boolean> => {
+export const deletePatientAPI = async (PATIENT_ID: number) => {
+  if (PATIENT_ID !== 0) {
+    alert(`${PATIENT_ID}번 환자가 삭제되었습니다.`);
+  } else {
+    alert(`환자가 선택되지 않았습니다.`);
+  }
   const res = await api.delete(`${PATIENT_PATH}/${PATIENT_ID}`);
   return res.status === 204;
 };

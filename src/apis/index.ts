@@ -47,7 +47,6 @@ api.interceptors.response.use(
         switch (response.status) {
           case 401:
             alert(response.statusText);
-            // TODO : signin page spa redirect
             window.location.href = "/Login";
             break;
           default:

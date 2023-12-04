@@ -11,19 +11,14 @@ import SignIn from "views/admin/SignIn";
 
 // Icon Imports
 import {
-  MdHome,
-  MdOutlineShoppingCart,
-  MdBarChart,
   MdEdit,
   MdOutlineQueryBuilder,
-  MdOutlineGroups,
   MdPerson,
   MdOutlineAssignment,
   MdMedicalServices,
-  MdAccountBox,
   MdOutlineContentPasteSearch,
   MdFitnessCenter,
-  MdCalendarMonth,
+  MdGroups,
 } from "react-icons/md";
 
 const routes = [
@@ -31,7 +26,7 @@ const routes = [
     name: "전체 환자 목록 조회",
     layout: "/auth",
     path: "default",
-    icon: <MdOutlineGroups className="h-6 w-6" />,
+    icon: <MdGroups className="h-6 w-6" />,
     component: <MainDashboard />,
   },
   {
