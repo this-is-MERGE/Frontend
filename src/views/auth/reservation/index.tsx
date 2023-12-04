@@ -8,12 +8,12 @@ import avatar1 from "assets/img/avatars/avatar1.png";
 import avatar2 from "assets/img/avatars/avatar2.png";
 import avatar3 from "assets/img/avatars/avatar3.png";
 
-import tableDataTopCreators from "views/auth/marketplace/variables/tableDataTopCreators";
+import tableDataTopCreators from "views/auth/reservation/variables/tableDataTopCreators";
 import HistoryCard from "./components/HistoryCard";
 import TopCreatorTable from "./components/TableTopCreators";
 import NftCard from "components/card/NftCard";
 
-const Marketplace = () => {
+const Reservation = () => {
   return (
     <div className="mt-3 grid h-full grid-cols-1 gap-5 xl:grid-cols-2 2xl:grid-cols-3">
       <div className="col-span-1 h-fit w-full xl:col-span-1 2xl:col-span-2">
@@ -130,4 +130,4 @@ const Marketplace = () => {
   );
 };
 
-export default Marketplace;
+export default Reservation;
