@@ -1,6 +1,10 @@
 import React from "react";
-import Progress from "components/progress";
+import CardMenu from "components/card/CardMenu";
+import { DiApple } from "react-icons/di";
+import { DiAndroid } from "react-icons/di";
+import { DiWindows } from "react-icons/di";
 import Card from "components/card";
+import Progress from "components/progress";
 
 import {
   createColumnHelper,
@@ -10,10 +14,12 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+
 type RowObj = {
-  name: string[];
-  artworks: number;
-  rating: number;
+  name: string;
+  tech: any;
+  date: string;
+  progress: number;
 };
 
 function CheckTable(props: { tableData: any }) {
@@ -26,44 +32,89 @@ function CheckTable(props: { tableData: any }) {
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">NAME</p>
       ),
-      cell: (info: any) => (
-        <div className="flex items-center gap-2">
-          <div className="h-[30px] w-[30px] rounded-full">
-            <img
-              src={info.getValue()[1]}
-              className="h-full w-full rounded-full"
-              alt=""
-            />
-          </div>
-          <p className="text-sm font-medium text-navy-700 dark:text-white">
-            {info.getValue()[0]}
-          </p>
-        </div>
-      ),
-    }),
-    columnHelper.accessor("artworks", {
-      id: "artworks",
-      header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          ARTWORKS
-        </p>
-      ),
       cell: (info) => (
-        <p className="text-md font-medium text-gray-600 dark:text-white">
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
           {info.getValue()}
         </p>
       ),
     }),
-    columnHelper.accessor("rating", {
-      id: "rating",
+    columnHelper.accessor("tech", {
+      id: "tech",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">TECH</p>
+      ),
+      cell: (info: any) => (
+        <div className="flex items-center gap-2">
+          {info.getValue().map((item: string, key: number) => {
+            if (item === "apple") {
+              return (
+                <div
+                  key={key}
+                  className="text-[22px] text-gray-600 dark:text-white"
+                >
+                  <DiApple />
+                </div>
+              );
+            } else if (item === "android") {
+              return (
+                <div
+                  key={key}
+                  className="text-[21px] text-gray-600 dark:text-white"
+                >
+                  <DiAndroid />
+                </div>
+              );
+            } else if (item === "windows") {
+              return (
+                <div
+                  key={key}
+                  className="text-xl text-gray-600 dark:text-white"
+                >
+                  <DiWindows />
+                </div>
+              );
+            } else return null;
+          })}
+        </div>
+      ),
+    }),
+    columnHelper.accessor("progress", {
+      id: "progress",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
-          RATING
+          PROGRESS
         </p>
       ),
       cell: (info) => (
-        <div className="mx-2 flex font-bold">
-          <Progress width="w-16" value={info.getValue()} />
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("date", {
+      id: "date",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">DATE</p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("progress", {
+      id: "quantity",
+      header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">
+          QUANTITY
+        </p>
+      ),
+      cell: (info) => (
+        <div className="flex items-center gap-3">
+          <p className="text-sm font-bold text-navy-700 dark:text-white">
+            {info.getValue()}%
+          </p>
+          <Progress width="w-[68px]" value={info.getValue()} />
         </div>
       ),
     }),
@@ -81,15 +132,13 @@ function CheckTable(props: { tableData: any }) {
     debugTable: true,
   });
   return (
-    <Card extra={"w-full sm:overflow-auto px-6"}>
+    <Card extra={"w-full h-full sm:overflow-auto px-6"}>
       <header className="relative flex items-center justify-between pt-4">
         <div className="text-xl font-bold text-navy-700 dark:text-white">
           Check Table
         </div>
 
-        <button className="dark:active-bg-white-20 linear rounded-md bg-lightPrimary px-4 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-gray-100 active:bg-gray-200 dark:bg-white/5 dark:text-white dark:hover:bg-white/10">
-          See all
-        </button>
+        <CardMenu />
       </header>
 
       <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
@@ -103,7 +152,7 @@ function CheckTable(props: { tableData: any }) {
                       key={header.id}
                       colSpan={header.colSpan}
                       onClick={header.column.getToggleSortingHandler()}
-                      className="cursor-pointer border-b border-gray-200 pb-2 pr-4 pt-4 text-start"
+                      className="cursor-pointer border-b-[1px] border-gray-200 pt-4 pb-2 pr-4 text-start"
                     >
                       <div className="items-center justify-between text-xs text-gray-200">
                         {flexRender(
