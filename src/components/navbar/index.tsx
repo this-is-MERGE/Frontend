@@ -25,7 +25,7 @@ const Navbar = (props: {
   let date = today.getDate() > 9 ? today.getDate() : `0${today.getDate()}`;
 
   return (
-    <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
+    <nav className="sticky top-4 z-10 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
           <a
@@ -56,24 +56,13 @@ const Navbar = (props: {
       </div>
 
       <div className="relative mt-[3px] flex h-[61px] w-[300px] flex-grow items-center justify-around rounded-full bg-white py-2 pr-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[300px] md:flex-grow-0 xl:w-[300px] xl:gap-2">
-        {/* <div className="flex h-full items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
-          <p className="pl-3 pr-2 text-xl">
-            <FiSearch className="h-4 w-4 text-gray-400 dark:text-white" />
-          </p>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="block h-full w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
-          />
-        </div> */}
-        {/* Profile & Dropdown */}
         <Dropdown
           button={
             <div className="] flex rounded-full p-[3px] pr-[29px] ">
               <img
                 className="h-10 w-10 rounded-full"
                 src={avatar}
-                alt="Elon Musk"
+                alt="Person"
               />
               <div className="ml-[10px] flex flex-col justify-center">
                 <h1 className="text-sm font-bold text-navy-700 dark:text-white">
@@ -108,7 +97,7 @@ const Navbar = (props: {
                   Newsletter Settings
                 </a>
                 <a
-                  href=" "
+                  href="/"
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
                 >
                   Log Out

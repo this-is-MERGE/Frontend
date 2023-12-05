@@ -24,18 +24,21 @@ function CheckTable() {
     setData(data);
   };
 
+  const reloadPatients = async (): Promise<void> => {
+    await getPatients();
+  };
+
   useEffect(() => {
     void getPatients();
   }, []);
 
   const selectOnlyOne = (id: string) => {
-    for (
-      let i = data[0].PATIENT_ID;
-      i <= data[data.length - 1].PATIENT_ID + 1;
-      i++
-    ) {
-      (document.getElementById("check_" + i) as HTMLInputElement).checked =
-        false;
+    for (let i = 0; i < data.length; i++) {
+      (
+        document.getElementById(
+          "check_" + data[i].PATIENT_ID
+        ) as HTMLInputElement
+      ).checked = false;
     }
     (document.getElementById(id) as HTMLInputElement).checked = true;
   };
@@ -268,7 +271,7 @@ function CheckTable() {
           </table>
         </div>
       </Card>
-      <ManagePatient getPatients={getPatients} />
+      <ManagePatient reloadPatients={reloadPatients} />
     </>
   );
 }
