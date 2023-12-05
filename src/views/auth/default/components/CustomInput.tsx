@@ -5,7 +5,7 @@
 export default function CustomInput(props: {
   tag: string;
   label: string;
-  len?: number;
+  width?: string;
   pos_r?: boolean;
 }) {
   return (
@@ -14,7 +14,7 @@ export default function CustomInput(props: {
         {props.tag && props.pos_r && (
           <>
             <h3 className=" mr-[1rem] text-base">{props.tag}</h3>
-            <div className={`relative w-[${props.len}px]`}>
+            <div className={`relative ${props.width}`}>
               <input
                 className="border-blue-gray-200 bg-transparent text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer h-full w-full border-b pb-1.5 text-left font-sans text-base font-normal outline outline-0 transition-all focus:border-gray-900 focus:outline-0 disabled:border-0 dark:bg-[black]"
                 placeholder=" "
@@ -28,7 +28,7 @@ export default function CustomInput(props: {
 
         {props.tag && !props.pos_r && (
           <>
-            <div className={`relative w-[${props.len}px]`}>
+            <div className={`relative ${props.width}`}>
               <input
                 className="border-blue-gray-200 bg-transparent text-blue-gray-700 placeholder-shown:border-blue-gray-200 disabled:bg-blue-gray-50 peer h-full w-full border-b pb-1.5 text-right font-sans text-base font-normal outline outline-0 transition-all focus:border-gray-900 focus:outline-0 disabled:border-0 dark:bg-[black]"
                 placeholder=" "

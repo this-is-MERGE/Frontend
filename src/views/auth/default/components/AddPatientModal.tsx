@@ -17,9 +17,9 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
     <>
       <div className="absolute left-0 top-0 z-20 h-full w-full bg-[#000] opacity-75"></div>
       <div className="absolute left-0 top-0 z-30 h-full w-full">
-        <div className="absolute left-[50%] top-[50%] h-2/3 w-[356px] translate-x-[-50%] translate-y-[-50%] rounded-lg bg-white opacity-100 shadow-lg ">
-          <div className=" flex h-[72px] w-full justify-start rounded-t-lg ">
-            <div className=" text-black ml-[25px] flex items-center gap-4 text-xl font-bold ">
+        <div className="absolute left-[50%] top-[50%] h-[766px] min-h-[766px] w-[356px] translate-x-[-50%] translate-y-[-50%] rounded-lg bg-white opacity-100 shadow-lg ">
+          <div className=" flex h-[72px] w-full justify-start rounded-t-lg dark:bg-[black]">
+            <div className=" text-black ml-[25px] flex items-center gap-4 text-xl font-bold dark:text-white">
               <FaUserPlus className="fill-black h-6 w-6" />
               신규 환자 추가
             </div>
@@ -28,20 +28,37 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
             className="absolute right-[20px] top-[20px]"
             onClick={onCloseButton}
           >
-            <MdOutlineClose className=" fill-black h-7 w-7 hover:fill-gray-500" />
+            <MdOutlineClose className="h-7 w-7 fill-[black] hover:fill-gray-500 dark:fill-white dark:hover:fill-[#aaa]" />
           </button>
           <div className="flex h-full w-full flex-col items-center dark:bg-[black] dark:text-white">
+            <div className=" h-fit w-[18rem]">
+              <label
+                htmlFor="countries"
+                className="mb-2 block text-base font-bold text-[black] dark:text-white"
+              >
+                담당 의사
+              </label>
+              <select
+                id="countries"
+                className="border-blue-gray-200 block  w-full border-b-[1px] p-2.5 text-sm text-gray-900 outline-none dark:border-gray-200 dark:bg-[black] dark:text-white  dark:placeholder-gray-400"
+              >
+                <option value="">홍박사</option>
+                <option value="">김박사</option>
+                <option value="">장박사</option>
+                <option value="">노박사</option>
+              </select>
+            </div>
             <div className=" flex h-fit w-[20rem] justify-around">
               <CustomInput
                 tag="환자"
                 label="환자 이름"
-                len={100}
+                width={`w-[90px]`}
                 pos_r={false}
               ></CustomInput>
               <CustomInput
                 tag="살"
                 label="환자 나이"
-                len={100}
+                width={`w-[90px]`}
                 pos_r={false}
               ></CustomInput>
             </div>
@@ -58,19 +75,27 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
                 </div>
               </div>
             </div>
-            <div className=" mt-4 flex h-fit w-[20rem] justify-around">
+            <div className=" ml-[2.2rem] mt-4 flex h-fit w-[20rem] ">
               <CustomInput
-                tag="휴대폰 번호"
-                label="휴대폰 번호"
-                len={200}
+                tag="주민등록번호"
+                label="주민등록번호"
+                width={`w-[190px]`}
                 pos_r={true}
               ></CustomInput>
             </div>
-            <div className=" mt-4 flex h-fit w-[20rem] justify-around">
+            <div className=" ml-[2.2rem] mt-4 flex h-fit w-[20rem] ">
+              <CustomInput
+                tag="휴대폰 번호"
+                label="휴대폰 번호"
+                width={`w-[200px]`}
+                pos_r={true}
+              ></CustomInput>
+            </div>
+            <div className=" ml-[2.2rem] mt-4 flex h-fit w-[20rem] ">
               <CustomInput
                 tag="거주지 주소"
                 label="거주지 주소"
-                len={200}
+                width={`w-[200px]`}
                 pos_r={true}
               ></CustomInput>
             </div>
