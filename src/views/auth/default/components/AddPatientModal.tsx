@@ -2,16 +2,21 @@ import { MdOutlineClose } from "react-icons/md";
 import { FaUserPlus } from "react-icons/fa";
 import CustomInput from "./CustomInput";
 import Radio from "components/radio";
-import { getUserAPI } from "apis/patient";
+import { getUserAPI, updatePatientAPI } from "apis/patient";
 import { SimepleUserType } from "types/simple-user";
 import { useEffect, useState } from "react";
 
 interface ModalProps {
   modalStatus: boolean;
   setModalStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  reloadPatients: () => Promise<void>;
 }
 
-function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
+function AddPatientModal({
+  modalStatus,
+  setModalStatus,
+  reloadPatients,
+}: ModalProps) {
   const onCloseButton = () => {
     setModalStatus(!modalStatus);
   };
@@ -22,6 +27,32 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
     data = await getUserAPI();
     console.log(data);
     setData(data);
+  };
+
+  const updateUsers = (
+    GENDER: string,
+    AGE: number,
+    ADDRESS: string,
+    PHONE_NUMBER: number,
+    RESIDENT_REGISTRATION_NUMBER: string,
+    SPECIAL_NOTE: string,
+    PATIENT_NAME: string,
+    USER_NAME: string,
+    DEPARTMENT: string,
+    NAME: string
+  ) => {
+    updatePatientAPI(
+      GENDER,
+      AGE,
+      ADDRESS,
+      PHONE_NUMBER,
+      RESIDENT_REGISTRATION_NUMBER,
+      SPECIAL_NOTE,
+      PATIENT_NAME,
+      USER_NAME,
+      DEPARTMENT,
+      NAME
+    );
   };
 
   useEffect(() => {
@@ -131,7 +162,26 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
               </div>
             </div>
             <div className=" mt-4 flex h-fit  w-[20rem] justify-end">
-              <button className="mr-4 rounded-lg border-2 border-brand-500 px-3 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-brand-600/5 active:bg-brand-700/5 dark:border-brand-400 dark:bg-brand-400/10 dark:text-white dark:hover:bg-brand-300/10 dark:active:bg-brand-200/10">
+              <button
+                className="mr-4 rounded-lg border-2 border-brand-500 px-3 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-brand-600/5 active:bg-brand-700/5 dark:border-brand-400 dark:bg-brand-400/10 dark:text-white dark:hover:bg-brand-300/10 dark:active:bg-brand-200/10"
+                onClick={() => {
+                  updateUsers(
+                    "GENDER",
+                    25,
+                    "경기도 수원시 테헤란로",
+                    1038472626,
+                    "990902-3827292",
+                    "배가아파요",
+                    "아따맘마",
+                    "홍의사",
+                    "마취통증과",
+                    "홍의사"
+                  );
+                  reloadPatients();
+                  onCloseButton();
+                  window.location.reload();
+                }}
+              >
                 Default
               </button>
             </div>

@@ -27,6 +27,10 @@ const todayPatient = async (): Promise<PatientType[]> => {
   let arr = [];
 
   for (let i = 0; i < response.length; i++) {
+    if (response[i].RESERVATION_DATE === null) {
+      continue;
+    }
+
     if (
       response[i].RESERVATION_DATE.substring(
         0,
@@ -49,25 +53,27 @@ export const getUserAPI = async (): Promise<SimepleUserType[]> => {
 };
 
 export const updatePatientAPI = async (
-  PATIENT_ID: number,
   GENDER: string,
   AGE: number,
   ADDRESS: string,
   PHONE_NUMBER: number,
   RESIDENT_REGISTRATION_NUMBER: string,
   SPECIAL_NOTE: string,
+  PATIENT_NAME: string,
   USER_NAME: string,
+  DEPARTMENT: string,
   NAME: string
 ): Promise<PatientType> => {
-  const response = await api.put(`${PATIENT_PATH}/${PATIENT_ID}`, {
-    PATIENT_ID,
+  const response = await api.post(`${PATIENT_PATH}`, {
     GENDER,
     AGE,
     ADDRESS,
     PHONE_NUMBER,
     RESIDENT_REGISTRATION_NUMBER,
     SPECIAL_NOTE,
+    PATIENT_NAME,
     USER_NAME,
+    DEPARTMENT,
     NAME,
   });
 

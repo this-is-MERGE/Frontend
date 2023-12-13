@@ -13,12 +13,15 @@ function ManagePatient({ reloadPatients }: PatientsProps): JSX.Element {
 
   const checkSelected = () => {
     let list = document.getElementsByClassName("ischecked");
-    for (let i = 1; i <= list.length; i++) {
-      if ((document.getElementById("check_" + i) as HTMLInputElement).checked) {
-        checked = i;
+    for (let i = 0; i < list.length; i++) {
+      if ((list[i] as HTMLInputElement).checked) {
+        let elemId = (list[i] as HTMLInputElement).id;
+        let id = elemId.split("_")[1];
+        checked = Number(id);
       }
     }
   };
+  checkSelected();
 
   const onDeleteClick = async (): Promise<void> => {
     if (window.confirm("해당 환자를 삭제하시겠습니까?")) {
@@ -54,6 +57,7 @@ function ManagePatient({ reloadPatients }: PatientsProps): JSX.Element {
         <AddPatientModal
           modalStatus={modalStatus}
           setModalStatus={setModalStatus}
+          reloadPatients={reloadPatients}
         />
       )}
       <button
@@ -62,6 +66,7 @@ function ManagePatient({ reloadPatients }: PatientsProps): JSX.Element {
         onClick={() => {
           onDeleteClick();
           reloadPatients();
+          window.location.reload();
         }}
       >
         <FaUserSlash className="h-4.5 w-4.5" />
