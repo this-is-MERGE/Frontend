@@ -1,5 +1,6 @@
 import { api } from ".";
 import { PatientType } from "../types/patient";
+import { SimepleUserType } from "../types/simple-user";
 
 const PATIENT_PATH = "/patient";
 
@@ -40,6 +41,11 @@ const todayPatient = async (): Promise<PatientType[]> => {
 
 export const getTodayPatientAPI = async (): Promise<PatientType[]> => {
   return todayPatient();
+};
+
+export const getUserAPI = async (): Promise<SimepleUserType[]> => {
+  let response = (await api.get(PATIENT_PATH)).data.users;
+  return response;
 };
 
 export const updatePatientAPI = async (

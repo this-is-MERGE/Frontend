@@ -2,6 +2,9 @@ import { MdOutlineClose } from "react-icons/md";
 import { FaUserPlus } from "react-icons/fa";
 import CustomInput from "./CustomInput";
 import Radio from "components/radio";
+import { getUserAPI } from "apis/patient";
+import { SimepleUserType } from "types/simple-user";
+import { useEffect, useState } from "react";
 
 interface ModalProps {
   modalStatus: boolean;
@@ -12,6 +15,19 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
   const onCloseButton = () => {
     setModalStatus(!modalStatus);
   };
+
+  let [data, setData] = useState<SimepleUserType[]>([]);
+
+  const getUsers = async (): Promise<void> => {
+    data = await getUserAPI();
+    console.log(data);
+    setData(data);
+  };
+
+  useEffect(() => {
+    void getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -42,10 +58,14 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
                 id="countries"
                 className="border-blue-gray-200 block  w-full border-b-[1px] p-2.5 text-sm text-gray-900 outline-none dark:border-gray-200 dark:bg-[black] dark:text-white  dark:placeholder-gray-400"
               >
-                <option value="">홍박사</option>
-                <option value="">김박사</option>
-                <option value="">장박사</option>
-                <option value="">노박사</option>
+                {data.map((_, idx) => {
+                  const num = idx + 1;
+                  return (
+                    <option key={num} value={num}>
+                      {data[idx].USER_NAME}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className=" flex h-fit w-[20rem] justify-around">

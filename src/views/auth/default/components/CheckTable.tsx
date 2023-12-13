@@ -25,6 +25,7 @@ function CheckTable() {
   };
 
   const reloadPatients = async (): Promise<void> => {
+    console.log("reloaded!", data);
     await getPatients();
   };
 

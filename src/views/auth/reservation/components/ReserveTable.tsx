@@ -20,7 +20,6 @@ function ReserveTable() {
 
   const getTodayPatients = async (): Promise<void> => {
     data = await getTodayPatientAPI();
-    console.log(data);
     setData(data);
   };
 
