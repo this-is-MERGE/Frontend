@@ -14,7 +14,7 @@ export default function StartPage(props: { [x: string]: any }) {
           alt="Health_Mate_TextLogo"
         />
         <button
-          onClick={() => push("/Login")}
+          onClick={() => push("/sign-in")}
           className="mt-[46px] h-[93px] rounded-xl bg-brand-400 px-4 py-3 text-2xl font-bold text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200"
         >
           시작하기
