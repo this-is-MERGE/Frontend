@@ -4,7 +4,9 @@ import React from "react";
 import MainDashboard from "views/auth/default";
 import Reservation from "views/auth/reservation";
 import Profile from "views/auth/profile";
+import ReportOverview from "views/auth/report/report";
 import DataTables from "views/auth/tables";
+import PhysicalTherapy from "views/auth/physical_therapy";
 
 // Auth Imports
 import SignIn from "views/admin/SignIn";
@@ -54,23 +56,23 @@ const routes = [
   {
     name: "운동 치료 내역",
     layout: "/auth",
-    path: "profile",
+    path: "physical_therapy",
     icon: <MdFitnessCenter className="h-6 w-6" />,
-    component: <Profile />,
+    component: <PhysicalTherapy />,
   },
   {
     name: "종합 리포트",
     layout: "/auth",
-    path: "profile",
+    path: "report",
     icon: <MdOutlineContentPasteSearch className="h-6 w-6" />,
-    component: <Profile />,
+    component: <ReportOverview />,
   },
   {
     name: "운동 치료 정보 수정",
     layout: "/auth",
-    path: "profile",
+    path: "aa",
     icon: <MdEdit className="h-6 w-6" />,
-    component: <Profile />,
+    component: <PhysicalTherapy />,
   },
   {
     name: "나의 정보 수정",

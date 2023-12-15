@@ -66,8 +66,8 @@ function CheckTable() {
         </div>
       ),
     }),
-    columnHelper.accessor("NAME", {
-      id: "NAME",
+    columnHelper.accessor("PATIENT_NAME", {
+      id: "PATIENT_NAME",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">이름</p>
       ),
