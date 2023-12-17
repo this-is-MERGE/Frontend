@@ -3,6 +3,7 @@ import Card from "components/card";
 import { UserType } from "types/user";
 import { getUserAPI } from "apis/user";
 import UserStatus from "./UserStatus";
+import { deleteUserAPI } from "apis/user";
 
 import {
   createColumnHelper,
@@ -17,11 +18,14 @@ function UserListTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [modalStatus, setModalStatus] = useState<number>(0);
   let [data, setData] = useState<UserType[]>([]);
+  let checked = 0;
 
   const getUsers = async (): Promise<void> => {
     data = await getUserAPI();
     setData(data);
   };
+
+  console.log(data);
 
   const reloadUsers = async (): Promise<void> => {
     console.log("reloaded!", data);
@@ -35,7 +39,6 @@ function UserListTable() {
   const onModalOpen = (idx: number) => {
     setModalStatus(idx);
   };
-
   const selectOnlyOne = (id: string) => {
     for (let i = 0; i < data.length; i++) {
       (
@@ -43,6 +46,47 @@ function UserListTable() {
       ).checked = false;
     }
     (document.getElementById(id) as HTMLInputElement).checked = true;
+  };
+
+  const checkSelected = () => {
+    let list = document.getElementsByClassName("ischecked");
+    for (let i = 0; i < list.length; i++) {
+      if ((list[i] as HTMLInputElement).checked) {
+        let elemId = (list[i] as HTMLInputElement).id;
+        let id = elemId.split("_")[1];
+        checked = Number(id);
+      }
+    }
+  };
+  checkSelected();
+
+  const categoryEdit = (category: string) => {
+    if (category === "의사") {
+      return "환자정보, 진료, 검사";
+    } else if (category === "간호사") {
+      return "환자정보, 검사";
+    } else {
+      return "환자정보, 검사";
+    }
+  };
+
+  const categoryOpen = (category: string) => {
+    if (category === "의사") {
+      return "운동 치료";
+    } else if (category === "간호사") {
+      return "진료, 운동 치료";
+    } else {
+      return "운동 치료";
+    }
+  };
+
+  const onDeleteClick = async (): Promise<void> => {
+    if (window.confirm("해당 유저를 삭제하시겠습니까?")) {
+      checkSelected();
+      const flag = await deleteUserAPI(checked);
+      if (flag) {
+      }
+    }
   };
 
   const columns = [
@@ -128,7 +172,9 @@ function UserListTable() {
         </p>
       ),
       cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">{123}</p>
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {categoryEdit(info.getValue())}
+        </p>
       ),
     }),
     columnHelper.accessor("CATEGORY", {
@@ -139,7 +185,9 @@ function UserListTable() {
         </p>
       ),
       cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">{123}</p>
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {categoryOpen(info.getValue())}
+        </p>
       ),
     }),
   ]; // eslint-disable-next-line
@@ -222,9 +270,20 @@ function UserListTable() {
               })}
             </tbody>
           </table>
+          <button
+            className="text-bold absolute bottom-[33px] right-[33px] flex flex-row items-center gap-2 rounded-xl bg-red-500 px-4 py-3 text-base font-medium text-white transition duration-200 hover:bg-red-600 active:bg-red-700 dark:bg-red-400 dark:text-white dark:hover:bg-red-300 dark:active:bg-red-200"
+            data-ripple-light
+            onClick={() => {
+              onDeleteClick();
+              reloadUsers();
+              window.location.reload();
+            }}
+          >
+            -
+          </button>
         </div>
       </Card>
-      <UserStatus modalStatus={modalStatus} />
+      {<UserStatus modalStatus={modalStatus} />}
     </>
   );
 }
