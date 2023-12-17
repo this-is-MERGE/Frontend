@@ -2,16 +2,64 @@ import { MdOutlineClose } from "react-icons/md";
 import { FaUserPlus } from "react-icons/fa";
 import CustomInput from "./CustomInput";
 import Radio from "components/radio";
+import { updatePatientAPI } from "apis/patient";
+import { UserType } from "types/user";
+import { useEffect, useState } from "react";
+import { getUserAPI } from "apis/user";
 
 interface ModalProps {
   modalStatus: boolean;
   setModalStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  reloadPatients: () => Promise<void>;
 }
 
-function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
+function AddPatientModal({
+  modalStatus,
+  setModalStatus,
+  reloadPatients,
+}: ModalProps) {
   const onCloseButton = () => {
     setModalStatus(!modalStatus);
   };
+
+  let [data, setData] = useState<UserType[]>([]);
+
+  const getUsers = async (): Promise<void> => {
+    data = await getUserAPI();
+    // console.log(data);
+    setData(data);
+  };
+
+  const updateUsers = (
+    GENDER: string,
+    AGE: number,
+    ADDRESS: string,
+    PHONE_NUMBER: string,
+    RESIDENT_REGISTRATION_NUMBER: string,
+    SPECIAL_NOTE: string,
+    PATIENT_NAME: string,
+    USER_NAME: string,
+    DEPARTMENT: string
+  ) => {
+    updatePatientAPI(
+      GENDER,
+      AGE,
+      ADDRESS,
+      PHONE_NUMBER,
+      RESIDENT_REGISTRATION_NUMBER,
+      SPECIAL_NOTE,
+      PATIENT_NAME,
+      USER_NAME,
+      DEPARTMENT
+    );
+  };
+
+  useEffect(() => {
+    void getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(data);
 
   return (
     <>
@@ -42,10 +90,14 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
                 id="countries"
                 className="border-blue-gray-200 block  w-full border-b-[1px] p-2.5 text-sm text-gray-900 outline-none dark:border-gray-200 dark:bg-[black] dark:text-white  dark:placeholder-gray-400"
               >
-                <option value="">홍박사</option>
-                <option value="">김박사</option>
-                <option value="">장박사</option>
-                <option value="">노박사</option>
+                {data.map((_, idx) => {
+                  const num = idx + 1;
+                  return (
+                    <option key={num} value={num}>
+                      {data[idx].USER_NAME}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className=" flex h-fit w-[20rem] justify-around">
@@ -111,7 +163,25 @@ function AddPatientModal({ modalStatus, setModalStatus }: ModalProps) {
               </div>
             </div>
             <div className=" mt-4 flex h-fit  w-[20rem] justify-end">
-              <button className="mr-4 rounded-lg border-2 border-brand-500 px-3 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-brand-600/5 active:bg-brand-700/5 dark:border-brand-400 dark:bg-brand-400/10 dark:text-white dark:hover:bg-brand-300/10 dark:active:bg-brand-200/10">
+              <button
+                className="mr-4 rounded-lg border-2 border-brand-500 px-3 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-brand-600/5 active:bg-brand-700/5 dark:border-brand-400 dark:bg-brand-400/10 dark:text-white dark:hover:bg-brand-300/10 dark:active:bg-brand-200/10"
+                onClick={() => {
+                  updateUsers(
+                    "남성",
+                    23,
+                    "안산시 상록구 한양대학로",
+                    "010-8844-8877",
+                    "011216-0398278",
+                    "이 환자는 재활치료가 필요함 있음",
+                    "김반석",
+                    "김의사",
+                    "마취통증과"
+                  );
+                  reloadPatients();
+                  onCloseButton();
+                  window.location.reload();
+                }}
+              >
                 Default
               </button>
             </div>

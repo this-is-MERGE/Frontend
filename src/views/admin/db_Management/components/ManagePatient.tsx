@@ -1,7 +1,5 @@
 import { FaUserEdit, FaUserPlus, FaUserSlash } from "react-icons/fa";
-import { deletePatientAPI } from "apis/patient";
 import { useState } from "react";
-import AddPatientModal from "./AddPatientModal";
 
 interface PatientsProps {
   reloadPatients: () => Promise<void>;
@@ -22,15 +20,6 @@ function ManagePatient({ reloadPatients }: PatientsProps): JSX.Element {
     }
   };
   checkSelected();
-
-  const onDeleteClick = async (): Promise<void> => {
-    if (window.confirm("해당 환자를 삭제하시겠습니까?")) {
-      checkSelected();
-      const flag = await deletePatientAPI(checked);
-      if (flag) {
-      }
-    }
-  };
 
   const onModalOpen = () => {
     setModalStatus(!modalStatus);
@@ -53,18 +42,10 @@ function ManagePatient({ reloadPatients }: PatientsProps): JSX.Element {
         <FaUserPlus className="h-4.5 w-4.5" />
         신규 환자 추가
       </button>
-      {modalStatus && (
-        <AddPatientModal
-          modalStatus={modalStatus}
-          setModalStatus={setModalStatus}
-          reloadPatients={reloadPatients}
-        />
-      )}
       <button
         className="flex flex-row items-center gap-2 rounded-xl bg-red-500 px-4 py-3 text-base font-medium text-white transition duration-200 hover:bg-red-600 active:bg-red-700 dark:bg-red-400 dark:text-white dark:hover:bg-red-300 dark:active:bg-red-200"
         data-ripple-light
         onClick={() => {
-          onDeleteClick();
           reloadPatients();
           window.location.reload();
         }}

@@ -1,10 +1,8 @@
-import { MdChevronRight, MdChevronLeft } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Card from "components/card";
-import { FiSearch } from "react-icons/fi";
-import { PatientType } from "types/patient";
-import { getPatientAPI } from "apis/patient";
-import ManagePatient from "./ManagePatient";
+import { UserType } from "types/user";
+import { getUserAPI } from "apis/user";
+import UserStatus from "./UserStatus";
 
 import {
   createColumnHelper,
@@ -15,42 +13,43 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-function CheckTable() {
+function UserListTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
-  let [data, setData] = useState<PatientType[]>([]);
+  const [modalStatus, setModalStatus] = useState<number>(0);
+  let [data, setData] = useState<UserType[]>([]);
 
-  const getPatients = async (): Promise<void> => {
-    data = await getPatientAPI();
+  const getUsers = async (): Promise<void> => {
+    data = await getUserAPI();
     setData(data);
   };
 
-  const reloadPatients = async (): Promise<void> => {
+  const reloadUsers = async (): Promise<void> => {
     console.log("reloaded!", data);
-    await getPatients();
+    await getUsers();
   };
 
   useEffect(() => {
-    void getPatients();
+    void getUsers();
   }, []);
+
+  const onModalOpen = (idx: number) => {
+    setModalStatus(idx);
+  };
 
   const selectOnlyOne = (id: string) => {
     for (let i = 0; i < data.length; i++) {
       (
-        document.getElementById(
-          "check_" + data[i].PATIENT_ID
-        ) as HTMLInputElement
+        document.getElementById("check_" + data[i].USER_ID) as HTMLInputElement
       ).checked = false;
     }
     (document.getElementById(id) as HTMLInputElement).checked = true;
   };
 
   const columns = [
-    columnHelper.accessor("PATIENT_ID", {
-      id: "PATIENT_ID",
+    columnHelper.accessor("USER_ID", {
+      id: "USER_ID",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          환자 번호
-        </p>
+        <p className="text-sm font-bold text-gray-600 dark:text-white">항목</p>
       ),
       cell: (info: any) => (
         <div className="flex items-center">
@@ -60,51 +59,23 @@ function CheckTable() {
             id={"check_" + info.getValue()}
             onChange={(e) => selectOnlyOne(e.target.id)}
           />
-          <p className="ml-3 text-sm font-bold text-navy-700 dark:text-white">
+          <button
+            className="ml-3 text-sm font-bold text-navy-700 dark:text-white"
+            onClick={() => {
+              onModalOpen(info.getValue() - 1);
+            }}
+          >
             {info.getValue()}
-          </p>
+          </button>
         </div>
       ),
     }),
-    columnHelper.accessor("PATIENT_NAME", {
-      id: "PATIENT_NAME",
-      header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">이름</p>
-      ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
-      ),
-    }),
-    columnHelper.accessor("RESIDENT_REGISTRATION_NUMBER", {
-      id: "RESIDENT_REGISTRATION_NUMBER",
+    columnHelper.accessor("CATEGORY", {
+      id: "CATEGORY",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
-          주민등록번호
+          관계자 유형
         </p>
-      ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
-      ),
-    }),
-    columnHelper.accessor("GENDER", {
-      id: "GENDER",
-      header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">성별</p>
-      ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
-      ),
-    }),
-    columnHelper.accessor("ADDRESS", {
-      id: "ADDRESS",
-      header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">주소</p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
@@ -115,8 +86,19 @@ function CheckTable() {
     columnHelper.accessor("USER_NAME", {
       id: "USER_NAME",
       header: () => (
+        <p className="text-sm font-bold text-gray-600 dark:text-white">성명 </p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor("DEPARTMENT", {
+      id: "DEPARTMENT",
+      header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
-          담당의
+          소속부서
         </p>
       ),
       cell: (info) => (
@@ -125,11 +107,11 @@ function CheckTable() {
         </p>
       ),
     }),
-    columnHelper.accessor("LAST_TREATMENT_DATE", {
-      id: "LAST_TREATMENT_DATE",
+    columnHelper.accessor("LOGIN_ID", {
+      id: "LOGIN_ID",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
-          마지막 진료일
+          아이디
         </p>
       ),
       cell: (info) => (
@@ -138,34 +120,29 @@ function CheckTable() {
         </p>
       ),
     }),
-    columnHelper.accessor("RESERVATION_DATE", {
-      id: "RESERVATION_DATE",
+    columnHelper.accessor("CATEGORY", {
+      id: "CATEGORY",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
-          예약일시
+          권한-편집
         </p>
       ),
       cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
+        <p className="text-sm font-bold text-navy-700 dark:text-white">{123}</p>
       ),
     }),
-    columnHelper.accessor("SPECIAL_NOTE", {
-      id: "SPECIAL_NOTE",
+    columnHelper.accessor("CATEGORY", {
+      id: "CATEGORY",
       header: () => (
         <p className="text-sm font-bold text-gray-600 dark:text-white">
-          특이사항
+          권한-열람
         </p>
       ),
       cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
+        <p className="text-sm font-bold text-navy-700 dark:text-white">{123}</p>
       ),
     }),
   ]; // eslint-disable-next-line
-
   const table = useReactTable({
     data,
     columns,
@@ -177,39 +154,17 @@ function CheckTable() {
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
-
   return (
     <>
-      <Card extra={"w-full h-full sm:overflow-auto px-6 pb-6"}>
+      <Card extra={"w-full h-full sm:overflow-auto px-6 pb-6 col-span-6"}>
         <header className="relative flex h-[53px] items-center justify-between pt-[1.9rem]">
           <div className="title-container">
             <div className="text-xl font-bold text-navy-700 dark:text-white">
-              전체 환자 목록
+              병원 내부 관계자 목록
             </div>
             <p className="text-sm font-bold text-gray-600 dark:text-white">
               page 1
             </p>
-          </div>
-          {/* search bar */}
-          <div className="tool-container flex items-center gap-6">
-            <div className="flex h-[42px] items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
-              <p className="pl-3 pr-2 text-xl">
-                <FiSearch className="h-4 w-4 text-gray-400 dark:text-white" />
-              </p>
-              <input
-                type="text"
-                placeholder="Search..."
-                className="block h-full w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
-              />
-            </div>
-            <div className="buttom-container flex justify-end gap-2">
-              <button className="flex flex-row items-center rounded-xl bg-brand-500 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
-                <MdChevronLeft className="text-lg" />
-              </button>
-              <button className="flex flex-row items-center rounded-xl bg-brand-500 px-3 py-3 text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
-                <MdChevronRight className="text-lg" />
-              </button>
-            </div>
           </div>
         </header>
 
@@ -269,10 +224,10 @@ function CheckTable() {
           </table>
         </div>
       </Card>
-      <ManagePatient reloadPatients={reloadPatients} />
+      <UserStatus modalStatus={modalStatus} />
     </>
   );
 }
 
-export default CheckTable;
-const columnHelper = createColumnHelper<PatientType>();
+export default UserListTable;
+const columnHelper = createColumnHelper<UserType>();

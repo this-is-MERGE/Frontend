@@ -63,6 +63,13 @@ const Sidebar = (props: {
           <Link route={routes[6]} />
           <Link route={routes[7]} />
         </div>
+        <h1 className="mb-[18px] mt-[3rem] px-8 text-xl font-bold text-navy-700 marker:mb-[18px] dark:text-white">
+          마스터
+        </h1>
+        <div className="ml-[18px]">
+          <Link route={routes[8]} />
+          <Link route={routes[9]} />
+        </div>
       </ul>
 
       {/* Free Horizon Card */}

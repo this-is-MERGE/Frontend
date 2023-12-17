@@ -2,6 +2,7 @@
   "name": "health-mate",
   "private": true,
   "dependencies": {
+    "0g": "^0.0.9",
     "@chakra-ui/hooks": "^2.1.4",
     "@chakra-ui/modal": "^2.2.9",
     "@chakra-ui/popover": "^2.1.8",
@@ -22,6 +23,7 @@
     "apexcharts": "^3.35.5",
     "axios": "^1.6.2",
     "framer-motion": "^7.10.2",
+    "http-server": "^14.1.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-calendar": "^3.9.0",

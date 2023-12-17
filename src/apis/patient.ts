@@ -8,12 +8,12 @@ export const createPatientAPI = async (
   Patient: string
 ): Promise<PatientType> => {
   const response = await api.post(PATIENT_PATH, { Patient });
+
   return response.data;
 };
 
 export const getPatientAPI = async (): Promise<PatientType[]> => {
   const response = (await api.get(PATIENT_PATH)).data;
-
   return response.patients;
 };
 
@@ -26,6 +26,10 @@ const todayPatient = async (): Promise<PatientType[]> => {
   let arr = [];
 
   for (let i = 0; i < response.length; i++) {
+    if (response[i].RESERVATION_DATE === null) {
+      continue;
+    }
+
     if (
       response[i].RESERVATION_DATE.substring(
         0,
@@ -43,26 +47,26 @@ export const getTodayPatientAPI = async (): Promise<PatientType[]> => {
 };
 
 export const updatePatientAPI = async (
-  PATIENT_ID: number,
   GENDER: string,
   AGE: number,
   ADDRESS: string,
-  PHONE_NUMBER: number,
+  PHONE_NUMBER: string,
   RESIDENT_REGISTRATION_NUMBER: string,
   SPECIAL_NOTE: string,
+  PATIENT_NAME: string,
   USER_NAME: string,
-  NAME: string
+  DEPARTMENT: string
 ): Promise<PatientType> => {
-  const response = await api.put(`${PATIENT_PATH}/${PATIENT_ID}`, {
-    PATIENT_ID,
+  const response = await api.post(`${PATIENT_PATH}`, {
     GENDER,
     AGE,
     ADDRESS,
     PHONE_NUMBER,
     RESIDENT_REGISTRATION_NUMBER,
     SPECIAL_NOTE,
+    PATIENT_NAME,
     USER_NAME,
-    NAME,
+    DEPARTMENT,
   });
 
   return response.data;
