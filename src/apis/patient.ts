@@ -1,6 +1,5 @@
 import { api } from ".";
 import { PatientType } from "../types/patient";
-import { SimepleUserType } from "../types/simple-user";
 
 const PATIENT_PATH = "/patient";
 
@@ -9,12 +8,12 @@ export const createPatientAPI = async (
   Patient: string
 ): Promise<PatientType> => {
   const response = await api.post(PATIENT_PATH, { Patient });
+
   return response.data;
 };
 
 export const getPatientAPI = async (): Promise<PatientType[]> => {
   const response = (await api.get(PATIENT_PATH)).data;
-
   return response.patients;
 };
 
@@ -47,22 +46,16 @@ export const getTodayPatientAPI = async (): Promise<PatientType[]> => {
   return todayPatient();
 };
 
-export const getUserAPI = async (): Promise<SimepleUserType[]> => {
-  let response = (await api.get(PATIENT_PATH)).data.users;
-  return response;
-};
-
 export const updatePatientAPI = async (
   GENDER: string,
   AGE: number,
   ADDRESS: string,
-  PHONE_NUMBER: number,
+  PHONE_NUMBER: string,
   RESIDENT_REGISTRATION_NUMBER: string,
   SPECIAL_NOTE: string,
   PATIENT_NAME: string,
   USER_NAME: string,
-  DEPARTMENT: string,
-  NAME: string
+  DEPARTMENT: string
 ): Promise<PatientType> => {
   const response = await api.post(`${PATIENT_PATH}`, {
     GENDER,
@@ -74,7 +67,6 @@ export const updatePatientAPI = async (
     PATIENT_NAME,
     USER_NAME,
     DEPARTMENT,
-    NAME,
   });
 
   return response.data;

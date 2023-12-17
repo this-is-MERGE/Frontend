@@ -2,9 +2,10 @@ import { MdOutlineClose } from "react-icons/md";
 import { FaUserPlus } from "react-icons/fa";
 import CustomInput from "./CustomInput";
 import Radio from "components/radio";
-import { getUserAPI, updatePatientAPI } from "apis/patient";
-import { SimepleUserType } from "types/simple-user";
+import { updatePatientAPI } from "apis/patient";
+import { UserType } from "types/user";
 import { useEffect, useState } from "react";
+import { getUserAPI } from "apis/user";
 
 interface ModalProps {
   modalStatus: boolean;
@@ -21,11 +22,11 @@ function AddPatientModal({
     setModalStatus(!modalStatus);
   };
 
-  let [data, setData] = useState<SimepleUserType[]>([]);
+  let [data, setData] = useState<UserType[]>([]);
 
   const getUsers = async (): Promise<void> => {
     data = await getUserAPI();
-    console.log(data);
+    // console.log(data);
     setData(data);
   };
 
@@ -33,13 +34,12 @@ function AddPatientModal({
     GENDER: string,
     AGE: number,
     ADDRESS: string,
-    PHONE_NUMBER: number,
+    PHONE_NUMBER: string,
     RESIDENT_REGISTRATION_NUMBER: string,
     SPECIAL_NOTE: string,
     PATIENT_NAME: string,
     USER_NAME: string,
-    DEPARTMENT: string,
-    NAME: string
+    DEPARTMENT: string
   ) => {
     updatePatientAPI(
       GENDER,
@@ -50,8 +50,7 @@ function AddPatientModal({
       SPECIAL_NOTE,
       PATIENT_NAME,
       USER_NAME,
-      DEPARTMENT,
-      NAME
+      DEPARTMENT
     );
   };
 
@@ -59,6 +58,8 @@ function AddPatientModal({
     void getUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(data);
 
   return (
     <>
@@ -166,16 +167,15 @@ function AddPatientModal({
                 className="mr-4 rounded-lg border-2 border-brand-500 px-3 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-brand-600/5 active:bg-brand-700/5 dark:border-brand-400 dark:bg-brand-400/10 dark:text-white dark:hover:bg-brand-300/10 dark:active:bg-brand-200/10"
                 onClick={() => {
                   updateUsers(
-                    "GENDER",
-                    25,
-                    "경기도 수원시 테헤란로",
-                    1038472626,
-                    "990902-3827292",
-                    "배가아파요",
-                    "아따맘마",
-                    "홍의사",
-                    "마취통증과",
-                    "홍의사"
+                    "남성",
+                    23,
+                    "안산시 상록구 한양대학로",
+                    "010-8844-8877",
+                    "011216-0398278",
+                    "이 환자는 재활치료가 필요함 있음",
+                    "김반석",
+                    "김의사",
+                    "마취통증과"
                   );
                   reloadPatients();
                   onCloseButton();
